@@ -1,0 +1,18 @@
+[project]
+name = "copilot-chat-exporter"
+version = "0.1.0"
+description = "Export chat history from GitHub Copilot Chat in VS Code"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pydantic>=2.0.0",
+]
+
+[project.scripts]
+copilot-chat-export = "copilot_chat_exporter.cli.main:main"
+copilot-chat-quick = "copilot_chat_exporter.cli.quick_export:main"
+copilot-workspace-finder = "copilot_chat_exporter.cli.workspace_finder:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
