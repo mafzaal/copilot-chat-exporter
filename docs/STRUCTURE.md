@@ -89,6 +89,88 @@ python -m copilot_chat_exporter.cli.quick_export
 python -m copilot_chat_exporter.cli.workspace_finder --list
 ```
 
+### Run Directly from Git Repository
+
+Use `uvx` to execute the tool directly from the GitHub repository without cloning:
+
+```bash
+# Quick export (default action)
+uvx --from git+https://github.com/mafzaal/copilot-chat-exporter copilot-chat-quick
+
+# Main CLI with options
+uvx --from git+https://github.com/mafzaal/copilot-chat-exporter copilot-chat-export --format json
+
+# Find workspace IDs
+uvx --from git+https://github.com/mafzaal/copilot-chat-exporter copilot-workspace-finder --list
+
+# Or run as module
+uvx --from git+https://github.com/mafzaal/copilot-chat-exporter python -m copilot_chat_exporter.cli.quick_export
+```
+
+### Export Chat from Specific Workspace
+
+By default, the tool uses the current directory as the workspace. To export chat history from a different workspace:
+
+**Using the main CLI:**
+```bash
+# Specify workspace with --workspace or -w flag
+python main.py --workspace /path/to/your/workspace --format json
+
+# Example: Export to markdown format from specific workspace
+python main.py -w ~/projects/my-app --format markdown -o my-app-chat.md
+```
+
+**Using quick export:**
+```bash
+# Pass workspace path as first argument
+python -m copilot_chat_exporter.cli.quick_export /path/to/your/workspace
+
+# Or use the -w flag
+python -m copilot_chat_exporter.cli.quick_export -w /path/to/your/workspace
+
+# Show statistics for specific workspace
+python -m copilot_chat_exporter.cli.quick_export stats /path/to/your/workspace
+```
+
+**Using installed commands:**
+```bash
+# Main CLI
+copilot-chat-export --workspace /path/to/your/workspace
+
+# Quick export
+copilot-chat-quick /path/to/your/workspace
+```
+
+**From Git repository:**
+```bash
+# Using uvx
+uvx --from git+https://github.com/mafzaal/copilot-chat-exporter \
+    copilot-chat-export --workspace /path/to/your/workspace --format json
+```
+
+**As a library:**
+```python
+from copilot_chat_exporter import CopilotChatExporter
+
+# Specify workspace path
+exporter = CopilotChatExporter(workspace_path="/path/to/your/workspace")
+sessions = exporter.extract_chat_history()
+exporter.export_to_json(sessions, "output.json")
+```
+
+**Finding your workspace path:**
+```bash
+# List all VS Code workspaces on your system
+python -m copilot_chat_exporter.cli.workspace_finder --list
+
+# Find workspace ID for a specific folder
+python -m copilot_chat_exporter.cli.workspace_finder /path/to/folder
+
+# With verbose output
+python -m copilot_chat_exporter.cli.workspace_finder /path/to/folder --verbose
+```
+
+
 ## Benefits of This Structure
 
 1. **Clear Separation of Concerns**
